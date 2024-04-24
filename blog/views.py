@@ -95,7 +95,12 @@ def creat_post(request):
         form = CreatPost(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
+            post.author = request.user
             post.save()
+            img1 = Images.objects.create(image_file=form.cleaned_data['image1'], post=post)
+            post.images.add(img1)
+
+            return redirect('blog:profile')
 
     else:
         form = CreatPost()

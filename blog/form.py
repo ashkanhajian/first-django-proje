@@ -3,6 +3,8 @@ from .models import *
 
 
 class CreatPost(forms.ModelForm):
+    image1 = forms.ImageField(label='image 1', required=False)
+
     class Meta:
         model = Post
         fields = ['title', 'description', 'reading_time']
