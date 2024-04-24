@@ -1,0 +1,33 @@
+{% extends 'parent/base.html' %}
+{% block title %}post title{% endblock %}
+{% load blog_tags %}
+{% block content %}
+    <h1>post detail</h1>
+    <h2>{{ post.title }} by {{ post.author }}</h2>
+    <p>{{ post.description | markdown }}</p>
+    <hr>
+    <p>{{ post.publish }}</p>
+    <div>
+        {% with comments as cm_count %}
+    comment{{ cm_count|pluralize }}:
+    </div>
+     <div>
+     {% for cm in comments %}
+         <br>
+         {{ cm.name }}:{{ cm.body|linebreaks }}
+         <br>
+
+
+
+     {% empty %}
+         there is no comments
+     {% endfor %}
+     </div>
+    {% endwith %}
+     <form method="post" action="{% url 'blog:post_comment' post.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="add comment">
+    </form>
+
+{% endblock %}

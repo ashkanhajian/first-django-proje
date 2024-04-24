@@ -1,0 +1,22 @@
+{% extends 'parent/base.html' %}
+{% block title %}profile{% endblock %}
+{% block content %}
+    <p><a href="{%url "blog:creat_post"  %}">creat new post</a></p>
+
+    <table style="width: 80%; border: 2px solid black; text-align: right;  ">
+    <tr>
+        <th>radif</th>
+        <th>visit</th>
+        <th>edit</th>
+        <th>delete</th>
+    </tr>
+    {% for post in posts %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></td>
+            <td><a href="#">edit</a></td>
+            <td><a href="#">delete</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

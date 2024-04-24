@@ -1,0 +1,29 @@
+{% extends 'parent/base.html' %}
+{% block title %}profile{% endblock %}
+{% block content %}
+
+ <form method="post">
+    {% csrf_token %}
+        {% for field in form %}
+            <div>{{ field.label_tag }}</div>
+
+            {{ field }}
+            <div>{{ field.errors }}</div>
+        {% endfor %}
+    <input type="submit" value="ثبت تیکت">
+    </form>
+    {% if form.errors %}
+        <br>
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ field.label }}:{{ error }}
+                 {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if form.non_field_errors %}
+        {{ form.non_field_errors }}
+    {% endif %}
+
+{% endblock %}

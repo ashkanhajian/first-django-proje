@@ -1,0 +1,17 @@
+{% extends 'parent/base.html' %}
+{% load blog_tags %}
+{% block title %}index{% endblock %}
+{% block content %}
+    <h2>آمار</h2>
+    <p>{% total_posts %}:تعداد پست</p>
+    <p>{% total_comments %}:تعداد کامنت</p>
+    <p>:{% last_post %}تاریخ آخرین پست</p>
+
+    {% latest_posts 5 %}
+    <h2>محبوب ترین پست ها</h2>
+    {% fav_post as pop_posts %}
+    {% for post in pop_posts %}
+        <br>
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}:{{ post.comments_count }}comments</a>
+    {% endfor %}
+{% endblock %}
