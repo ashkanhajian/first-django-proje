@@ -9,7 +9,9 @@ urlpatterns = [
     path('posts/<pk>', views.post_detail, name='post_detail'),
     path('posts/<post_id>/comment', views.post_comment, name='post_comment'),
     path('ticket', views.ticket, name='ticket'),
-    path('creatpost', views.creat_post, name='creat_post'),
+
     path('search', views.post_search, name='post_search'),
-    path('profile', views.profile, name='profile')
+    path('profile/', views.profile, name='profile'),
+    path('profile/creatpost', views.creat_post, name='creat_post'),
+    path('profile/delete_post/<post_id>', views.delete_post, name='delete_post', )
 ]

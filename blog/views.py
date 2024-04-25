@@ -97,8 +97,7 @@ def creat_post(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            img1 = Images.objects.create(image_file=form.cleaned_data['image1'], post=post)
-            post.images.add(img1)
+            Images.objects.create(image_file=form.cleaned_data['image1'], post=post)
 
             return redirect('blog:profile')
 
@@ -136,3 +135,11 @@ def profile(request):
 
     }
     return render(request, 'blog/profile.html', context)
+
+
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('blog:profile')
+    return render(request, 'forms/delete-post.html', {'post': post})
