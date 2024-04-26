@@ -5,8 +5,9 @@ from .form import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DeleteView
 from django.views.decorators.http import require_POST
-
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -29,6 +30,7 @@ def index(request):
 # 'posts': posts,
 # }
 # return render(request, 'blog/list.html', context)
+
 class PostListView(ListView):
     queryset = Post.Published.all()
     context_object_name = "posts"
@@ -90,6 +92,7 @@ def post_comment(request, post_id):
     return render(request, 'forms/comment.html', context)
 
 
+@login_required
 def creat_post(request):
     if request.method == 'POST':
         form = CreatPost(request.POST, request.FILES)
@@ -106,6 +109,7 @@ def creat_post(request):
     return render(request, 'forms/creatpost.html', {"form": form})
 
 
+@login_required
 def post_search(request):
     query = None
     results = []
@@ -126,6 +130,7 @@ def post_search(request):
     return render(request, 'blog/search.html', context)
 
 
+@login_required
 def profile(request):
     user = request.user
     posts = Post.Published.filter(author=user)
@@ -158,3 +163,25 @@ def edit_post(request, post_id):
     else:
         form = CreatPost(instance=post)
     return render(request, 'forms/creatpost.html', {'form': form, 'post': post})
+
+
+# def user_login(request):
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             cd = form.cleaned_data
+#             user = authenticate(request, username=cd['username'], password=cd['password'])
+#             if user is not None:
+#                 if user.is_active:
+#                     login(request, user)
+#                     return redirect('blog:profile')
+#                 else:
+#                     return HttpResponse('banned')
+#             else:
+#                 return HttpResponse('you cant log in')
+#     else:
+#         form = LoginForm()
+#     return render(request, 'forms/templates/registration/login.html', {"form": form})
+def log_out(request):
+    logout(request)
+    return  redirect('blog:index')

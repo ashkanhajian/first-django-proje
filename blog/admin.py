@@ -7,7 +7,7 @@ admin.sites.AdminSite.site_header = 'پنل مدیریت'
 # inlines
 class ImageInLine(admin.TabularInline):
     model = Images
-    extra = 1
+    extra = 0
 
 
 class CommentInLine(admin.TabularInline):
