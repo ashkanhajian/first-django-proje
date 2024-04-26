@@ -8,6 +8,9 @@
     <hr>
     <p>{{ post.publish }}</p>
     <div>
+        {% for img in post.images.all %}
+            <img src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title.url }}">
+        {% endfor %}
         {% with comments as cm_count %}
     comment{{ cm_count|pluralize }}:
     </div>
@@ -16,7 +19,6 @@
          <br>
          {{ cm.name }}:{{ cm.body|linebreaks }}
          <br>
-
 
 
      {% empty %}

@@ -4,6 +4,9 @@
 
  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    {% for img in post.images.all %}
+        <img src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title.url }}">
+    {% endfor %}
     {{ form.as_p }}
     <input type="submit" value="save">
 
