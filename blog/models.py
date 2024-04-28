@@ -19,6 +19,13 @@ class Post(models.Model):
         PUBLISHED = 'PB', 'Publish'
         REJECTED = 'RJ', 'Rejected'
 
+    CATEGORIES_CHOICES = (
+        ('technology', 'Technology'),
+        ('Ai', 'Ai'),
+        ('programming', 'programming'),
+        ('blockchain', 'blockchain')
+    )
+
     # relations
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_posts')
     # data fields
@@ -34,6 +41,7 @@ class Post(models.Model):
     reading_time = models.PositiveIntegerField()
     objects = models.Manager()
     Published = PublishedManager()
+    category = models.CharField(max_length=20, choices=CATEGORIES_CHOICES, default='Ai')
 
     # img = models.ImageField(upload_to='images')
 

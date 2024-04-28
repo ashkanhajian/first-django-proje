@@ -16,26 +16,30 @@ def index(request):
     return render(request, 'blog/index.html')
 
 
-# def post_list(request):
-# posts = Post.Published.all()
-# paginator = Paginator(posts, 4)
-# page_number = request.GET.get('page', 1)
-# try:
-# posts = paginator.page(page_number)
-# except EmptyPage:
-# posts = paginator.page(page_number)
-# except PageNotAnInteger:
-# posts = paginator.page(1)
-# context = {
-# 'posts': posts,
-# }
-# return render(request, 'blog/list.html', context)
+def post_list(request, category=None):
+    if category is not None:
+        posts = Post.Published.filter(category)
+    else:
+        posts = Post.Published.all()
+    paginator = Paginator(posts, 4)
+    page_number = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page_number)
+    except EmptyPage:
+        posts = paginator.page(page_number)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'blog/list.html', context)
 
-class PostListView(ListView):
-    queryset = Post.Published.all()
-    context_object_name = "posts"
-    paginate_by = 3
-    template_name = "blog/list.html"
+
+# class PostListView(ListView):
+#     queryset = Post.Published.all()
+#     context_object_name = "posts"
+#     paginate_by = 3
+#     template_name = "blog/list.html"
 
 
 def post_detail(request, pk):

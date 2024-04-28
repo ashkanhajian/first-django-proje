@@ -3,6 +3,11 @@
 {% block content %}
     <h1>post list</h1>
 <ol style="--length: {{ posts|length }}" role="list">
+    {% if category %}
+        <h1><a href="{% url 'blog:post_list' %}">post lists{{ category }}</a></h1>
+    {% else %}
+    <h1><a href="{% url 'blog:post_list' %}">post list</a></h1>
+    {% endif %}
     {% for post in posts %}
         <li style="--i: {{ forloop.counter }}">
        <h3>
@@ -13,7 +18,7 @@
         </li>
     {% endfor %}
 </ol>
-{% include "partials/pagination.html" with page=page_obj %}
+{% include "partials/pagination.html" with page=posts %}
 
 
 {% endblock %}
