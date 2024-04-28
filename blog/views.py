@@ -184,4 +184,33 @@ def edit_post(request, post_id):
 #     return render(request, 'forms/templates/registration/login.html', {"form": form})
 def log_out(request):
     logout(request)
-    return  redirect('blog:index')
+    return redirect('blog:index')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            Account.objects.create(user=user)
+            return render(request, 'registration/register_done.html', {'user': user})
+    else:
+        form = UserRegisterForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+
+@login_required
+def edit_account(request):
+    if request.method == 'POST':
+        user_form = EditUserForm(request.POST, instance=request.user)
+        account_form = EditAccountForm(request.POST, instance=request.user.account, files=request.FILES)
+        if account_form.is_valid() and user_form.is_valid():
+            account_form.save()
+            user_form.save()
+    else:
+        user_form = EditUserForm(instance=request.user)
+        account_form = EditAccountForm(instance=request.user.account)
+
+    return render(request, 'registration/edit_account.html', {'user_form': user_form, 'account_form': account_form})

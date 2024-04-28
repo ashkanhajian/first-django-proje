@@ -19,5 +19,10 @@
         </tr>
     {% endfor %}
     </table>
+
+    <a href="{% url "blog:password_change" %}">change password</a>
+    <br>
+    <a href="{% url 'blog:edit_account' %}">edit information</a>
+    <br>
     <a href="{%url "blog:logout"  %}">exit</a>
 {% endblock %}

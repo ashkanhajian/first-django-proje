@@ -108,3 +108,17 @@ class Images(models.Model):
         indexes = [
             models.Index(fields=['-created'])
         ]
+
+
+class Account(models.Model):
+    user = models.OneToOneField(User, related_name='account', on_delete=models.CASCADE)
+    date = models.DateField(blank=True, null=True)
+    bio = models.TextField(verbose_name='bio', null=True, blank=True)
+    img = ResizedImageField(upload_to='account_images/', size=[500, 500], quality=90, blank=True, null=True)
+    job = models.CharField(max_length=250, verbose_name='job', null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+    class Meta:
+        verbose_name = 'account'

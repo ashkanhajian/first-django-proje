@@ -58,3 +58,28 @@ class SearchForm(forms.Form):
 # class LoginForm(forms.Form):
 #     username = forms.CharField(max_length=250, required=True)
 #     password = forms.CharField(max_length=250, required=True, widget=forms.PasswordInput)
+class UserRegisterForm(forms.ModelForm):
+    password = forms.CharField(max_length=20, widget=forms.PasswordInput, label='password')
+    password2 = forms.CharField(max_length=20, widget=forms.PasswordInput, label='repeat password')
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name']
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('passwords do not match')
+        return cd['password2']
+
+
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'last_name']
+
+
+class EditAccountForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['date', 'bio', 'img', 'job']

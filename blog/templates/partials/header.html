@@ -8,6 +8,7 @@
         <a href="#" >{{request.user.first_name | default:request.user.username }}</a>
         {% else %}
         <a href="{% url "blog:login" %}" >enter</a>
+        <a href="{% url "blog:register" %}" >register</a>
     {% endif %}
 
 </div>
