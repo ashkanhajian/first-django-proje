@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.postgres'
+    'django.contrib.postgres',
+
 
 ]
 
@@ -139,6 +140,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 
 LOGIN_REDIRECT_URL = '/blog/profile'
-LOGIN_URL = '/login/'
+LOGIN_URL = 'ahoura/login'
 LOGOUT_URL = '/logout/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
