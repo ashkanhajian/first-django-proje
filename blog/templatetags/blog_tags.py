@@ -9,7 +9,7 @@ register = template.Library()
 
 @register.simple_tag()
 def total_posts():
-    return Post.Published.count()
+    return Post.published.count()
 
 
 @register.simple_tag()
@@ -18,20 +18,22 @@ def total_comments():
 
 
 @register.simple_tag()
-def last_post():
-    return Post.Published.last().publish
+def last_post_date():
+    return Post.published.last().publish
+
+
+@register.simple_tag()
+def most_popular_posts(count=5):
+    return Post.published.annotate(comments_count=Count('comments')).order_by('-comments_count')[:count]
 
 
 @register.inclusion_tag("partials/latestposts.html")
 def latest_posts(count=4):
-    l_posts = Post.Published.order_by('-publish')[:count]
-    context = {'l_posts': l_posts}
+    l_posts = Post.published.order_by('-publish')[:count]
+    context = {
+        'l_posts': l_posts
+    }
     return context
-
-
-@register.simple_tag()
-def fav_post(count=5):
-    return Post.Published.annotate(comments_count=Count('comments')).order_by("-comments_count")[:count]
 
 
 @register.filter(name='markdown')

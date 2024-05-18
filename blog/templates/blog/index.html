@@ -1,17 +1,120 @@
 {% extends 'parent/base.html' %}
+{% block title %}post list{% endblock %}
+{% load static %}
 {% load blog_tags %}
-{% block title %}index{% endblock %}
-{% block content %}
-    <h2>آمار</h2>
-    <p>{% total_posts %}:تعداد پست</p>
-    <p>{% total_comments %}:تعداد کامنت</p>
-    <p>:{% last_post %}تاریخ آخرین پست</p>
+{% load jformat %}
+{% block head %} {% endblock %}
 
-    {% latest_posts 5 %}
-    <h2>محبوب ترین پست ها</h2>
-    {% fav_post as pop_posts %}
+{% block content %}
+
+
+<!-- Preloader START -->
+	<div class="preloader">
+		<div class="loader">
+			<div class="sh1"></div>
+			<div class="sh2"></div>
+		</div>
+	</div>
+<!-- Preloader END -->
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+
+<!-- =======================
+Main hero START -->
+<section class="py-2 h-400 overflow-hidden position-relative"
+         style="background-image: url({% static 'images/cover/cv1.jpg'  %}); background-position: center center;">
+	<div class="container-fluid h-100 p-0">
+    <div class="row align-items-center h-100 text-center">
+      <div class="col-12">
+        <!-- Hero title -->
+        <h1 class="text-white display-4">تکنولوژی و برنامه نویسی</h1>
+      </div>
+    </div>
+  </div>
+</section>
+    <!-- =======================
+Main hero END -->
+
+<!-- =======================
+Latest articles START -->
+<section class="py-5">
+	<div class="container-fluid px-sm-5">
+		<div class="row">
+			<!-- Title -->
+      <div class="mb-4 text-center">
+        <h2 class="h1 m-0">اخرین مقالات</h2>
+      </div>
+		</div>
+    <div class="row g-3 g-sm-5">
+		{% latest_posts 3 %}
+      <!-- Card item END -->
+    </div>
+        <a href="{% url 'blog:post_list' %}" class="btn btn-dark mb-0">مشاهده همه</a>
+  </div>
+</section>
+
+
+<!-- =======================
+Latest articles END -->
+
+
+<!-- =======================
+Last week highlights START -->
+<section class="py-5">
+	<div class="container-fluid px-sm-5">
+		<div class="row">
+			<!-- Title -->
+      <div class="mb-4 text-center">
+        <h2 class="h1 m-0">محبوب ترین مقالات</h2>
+      </div>
+		</div>
+    <div class="row g-4 g-sm-5">
+    {% most_popular_posts 3 as pop_posts %}
     {% for post in pop_posts %}
-        <br>
-        <a href="{{ post.get_absolute_url }}">{{ post.title }}:{{ post.comments_count }}comments</a>
-    {% endfor %}
+      <div class="col-sm-6 col-lg-4">
+        <!-- Card item START -->
+        <div class="card">
+          <!-- Card img -->
+          <div class="position-relative">
+            <img class="card-img rounded-0" src="{{ post.images.first.image_file.url }}" alt="Card image">
+            <div class="card-img-overlay d-flex align-items-start flex-column p-3">
+              <!-- Card overlay bottom -->
+              <div class="w-100 mt-auto">
+                <a href="#" class="badge text-bg-dark mb-2">{{ post.category }}</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-0 pt-3">
+            <h4 class="card-title"><a href="{{ post.get_absolute_url }} " class="btn-link text-reset stretched-link">{{ post.title }}</a></h4>
+            <p>{{ post.description | markdown | truncatewords:50  }}</p>
+            <!-- Card info -->
+            <ul class="nav nav-divider align-items-center">
+              <li class="nav-item">{{ post.publish|jformat:"%Y/%m/%d-%H:%M" }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+      <!-- Card item END -->
+    </div>
+  </div>
+</section>
+<!-- =======================
+Last week highlights END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+<!-- Back to top -->
+<div class="back-top"><i class="bi bi-arrow-up-short"></i></div>
+<!-- =======================
+JS libraries, plugins and custom scripts -->
+
+<!-- Bootstrap JS -->
+<script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Template Functions -->
+<script src="{% static 'js/functions.js' %}"></script>
+
 {% endblock %}

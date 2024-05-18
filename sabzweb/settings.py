@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_jalali',
     'django.contrib.postgres',
 
 
@@ -84,7 +85,7 @@ WSGI_APPLICATION = 'sabzweb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blog',
+        'NAME': 'ahoura1',
         "USER": 'blog.admin',
         "PASSWORD": '2020',
         'PORT': '5432'
@@ -139,7 +140,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'JPEG': ".jpg"}
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 
-LOGIN_REDIRECT_URL = '/blog/profile'
-LOGIN_URL = 'ahoura/login'
-LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/blog/profile/'
+LOGIN_URL = 'blog:login'
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
