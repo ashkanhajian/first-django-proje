@@ -26,7 +26,7 @@ Inner intro START -->
 	<div class="container">
 		<div class="row">
       <div class="col-12">
-        <div class="card bg-dark-overlay-5 overflow-hidden card-bg-scale h-400 text-center" style="background-image:url({{ post.images.first.image_file.url }}); background-position: center left; background-size: cover;">
+{#        <div class="card bg-dark-overlay-5 overflow-hidden card-bg-scale h-400 text-center" style="background-image:url({{ post.images.first.image_file.url }}); background-position: center left; background-size: cover;">#}
           <!-- Card Image overlay -->
           <div class="card-img-overlay d-flex align-items-center p-3 p-sm-4">
             <div class="w-100 my-auto">
@@ -40,7 +40,7 @@ Inner intro START -->
                   <div class="nav-link">
                     <div class="d-flex align-items-center text-white position-relative">
                       <div class="avatar avatar-sm">
-                        <img class="avatar-img rounded-circle" src="{{post.author.account.photo.url}}" alt="avatar">
+{#                        <img class="avatar-img rounded-circle" src="{{post.author.account.photo.url}}" alt="avatar">#}
                       </div>
                       <span class="ms-3">با <a href="#" class="stretched-link text-reset btn-link">{{ post.author }}</a></span>
                     </div>
@@ -72,8 +72,12 @@ Main START -->
 				<div class="row g-2 my-5">
 
 					<div class="col-md-4">
-						<img class="rounded" src="{{ post.images.first.image_file.url}}" alt="">
-
+						{% if post.images.first.image_file %}
+                             <img class="rounded-3" src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title }}">
+                            {% else %}
+                            <img class="rounded-3" src="{% static 'images/cover/images.jpg' %}" alt="no image">
+                            {% endif %}
+{#			      	<img class="rounded" src="{{ img.image_file.url }}" alt="{{ img.title }}">#}
 			       </a>
 					</div>
 
@@ -87,7 +91,7 @@ Main START -->
 					<!-- Avatar -->
 					<a href="#">
 						<div class="avatar avatar-xxl me-2 me-md-4">
-							<img class="avatar-img rounded-circle" src="{{post.author.account.photo.url}}" alt="avatar">
+{#							<img class="avatar-img rounded-circle" src="{{post.author.account.photo.url}}" alt="avatar">#}
 						</div>
 					</a>
 					<!-- Info -->
@@ -147,22 +151,41 @@ Main START -->
 			<div class="col-lg-3">
 				<div data-sticky data-margin-top="80" data-sticky-for="991">
           <!-- Categories -->
-	      	<div class="row g-2">
-						<h5>دسته بندی ها</h5>
-						<div class="d-flex justify-content-between align-items-center bg-warning bg-opacity-15 rounded p-2 position-relative">
-							<h6 class="m-0 text-warning"><a href="{% url 'blog:post_list_category' 'قائم30' %}">قائم30</a></h6>
+	      	<div>
+						<h4 class="mb-3">دسته بندی</h4>
+						<!-- Category item -->
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url("#"); background-position: center left; background-size: cover;">
+							<div class="bg-dark-overlay-4 p-3">
+								<a href="{% url 'blog:post_list_category' 'قائم30' %}" class="stretched-link btn-link text-white h5">قائم30</a>
+							</div>
 						</div>
-						<div class="d-flex justify-content-between align-items-center bg-info bg-opacity-10 rounded p-2 position-relative">
-							<h6 class="m-0 text-info"><a href="{% url 'blog:post_list_category' 'کاویان' %}">کاویان</a></h6>
+						<!-- Category item -->
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(assets/images/blog/4by3/02.jpg); background-position: center left; background-size: cover;">
+							<div class="bg-dark-overlay-4 p-3">
+								<a href="{% url 'blog:post_list_category' 'کاویان' %}" class="stretched-link btn-link text-white h5">کاویان</a>
+							</div>
 						</div>
-						<div class="d-flex justify-content-between align-items-center bg-danger bg-opacity-10 rounded p-2 position-relative">
-							<h6 class="m-0 text-danger"><a href="{% url 'blog:post_list_category' 'سنگ شور' %}">سنگ شور</a></h6>
+						<!-- Category item -->
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(assets/images/blog/4by3/03.jpg); background-position: center left; background-size: cover;">
+							<div class="bg-dark-overlay-4 p-3">
+								<a href="{% url 'blog:post_list_category' 'سنگ شور' %}" class="stretched-link btn-link text-white h5">سنگ شور</a>
+							</div>
 						</div>
-						<div class="d-flex justify-content-between align-items-center bg-primary bg-opacity-10 rounded p-2 position-relative">
-							<h6 class="m-0 text-primary"><a href="{% url 'blog:post_list_category' 'نورد' %}">نورد</a></h6>
+						<!-- Category item -->
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(assets/images/blog/4by3/04.jpg); background-position: center left; background-size: cover;">
+							<div class="bg-dark-overlay-4 p-3">
+								<a href="{% url 'blog:post_list_category' 'نورد' %}" class="stretched-link btn-link text-white h5">نورد</a>
+							</div>
 						</div>
-						<div class="d-flex justify-content-between align-items-center bg-success bg-opacity-10 rounded p-2 position-relative">
-							<h6 class="m-0 text-success"><a href="{% url 'blog:post_list_category' 'سایر' %}">سایر</a></h6>
+						<!-- Category item -->
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(assets/images/blog/4by3/05.jpg); background-position: center left; background-size: cover;">
+							<div class="bg-dark-overlay-4 p-3">
+								<a href="{% url 'blog:post_list_category' 'سایر' %}" class="stretched-link btn-link text-white h5">سایر</a>
+							</div>
+						</div>
+						<!-- View All Category button -->
+						<div class="text-center mt-3">
+							<a href="{% url 'blog:post_list' %}" class="text-muted text-primary-hover"><u>مشاهده همه</u></a>
 						</div>
 					</div>
 
